@@ -1,0 +1,18 @@
+.sizes-cta { margin-top: 30px; }
+.dialog-full-button { width: 100%; margin-top: 18px; }
+.combo-card { --combo-photo: url('/assets/products/combo-3p.jpeg'); }
+[data-slot="sheet-overlay"] { z-index: 300; background: rgba(0, 0, 0, .72); }
+.cart-panel[data-state="open"], .cart-panel[data-state="closed"] { right: 0; top: 0; transform: none; gap: 0; max-width: 540px; padding: 0; color: white; }
+.cart-panel[data-state="closed"] { transform: translateX(102%); }
+.cart-panel [data-slot="sheet-title"] { color: white; font: 900 2.3rem/1 var(--display); text-transform: uppercase; }
+[data-slot="dialog-overlay"] { z-index: 700; background: rgba(0, 0, 0, .82); }
+.dialog-card[data-slot="dialog-content"] { z-index: 701; display: block; gap: 0; padding: 0; color: white; outline: none; }
+.dialog-card [data-slot="dialog-title"] { margin: 0; color: white; font: 900 2.4rem/.9 var(--display); text-transform: uppercase; }
+.dialog-card [data-slot="dialog-description"] { margin: 9px 0 0; color: #aaa69e; font: inherit; line-height: 1.45; }
+.confirm-item { display: flex; justify-content: space-between; gap: 20px; padding: 9px 0; border-bottom: 1px solid var(--line); }
+.confirm-item span, .confirm-item small { display: block; }
+.confirm-item small { margin-top: 4px; color: #aaa69e; }
+.confirm-item > b { color: var(--yellow); white-space: nowrap; }
+.cart-item-actions { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 8px; }
+.customize-item { border: 1px solid var(--line); border-radius: 999px; background: transparent; color: var(--yellow); padding: 7px 10px; font-size: .73rem; font-weight: 800; cursor: pointer; }
+@media (max-width: 620px) { .cart-panel[data-state="open"], .cart-panel[data-state="closed"] { width: 100%; max-width: none; } .dialog-card [data-slot="dialog-title"] { font-size: 2rem; } }
