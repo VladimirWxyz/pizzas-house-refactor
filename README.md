@@ -23,4 +23,4 @@ Refactor de la web comercial a React, Vinext y TypeScript. La versión monolíti
 - `types/`: contratos TypeScript.
 - `styles/`: apariencia original y ajustes de integración.
 
-Los recursos visuales se reutilizan desde la copia de referencia mediante `public/assets` para evitar duplicados y mantener una única fuente de imágenes.
+Los recursos visuales de producción viven en `public/assets`; la copia monolítica mantiene sus propios archivos para seguir funcionando como respaldo independiente.
