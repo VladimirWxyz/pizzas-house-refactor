@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import type { Map as LeafletMap, Marker as LeafletMarker } from "leaflet";
 import { branchCenters } from "@/data/catalog";
 import { useOrder } from "@/context/order-context";
+import { geolocationErrorMessage } from "@/lib/geolocation";
 import type { GeoPoint } from "@/types/order";
 import { DialogFrame } from "@/components/order/dialog-frame";
 
@@ -51,6 +52,25 @@ export function MapDialog() {
           }
         };
         leafletMap.on("click", (event) => mark({ lat: event.latlng.lat, lng: event.latlng.lng }));
+        if (navigator.geolocation) {
+          setStatus("Intentando centrar el mapa en tu ubicación actual…");
+          navigator.geolocation.getCurrentPosition(
+            ({ coords }) => {
+              if (cancelled || !leafletMap) return;
+              const currentPoint = { lat: coords.latitude, lng: coords.longitude };
+              leafletMap.setView([currentPoint.lat, currentPoint.lng], 17);
+              mark(currentPoint);
+              setStatus("Ubicación aproximada detectada. Ajusta el pin si hace falta y guárdala.");
+            },
+            (error) => {
+              if (cancelled) return;
+              setStatus(`${geolocationErrorMessage(error)} Puedes tocar el mapa igualmente.`);
+            },
+            { enableHighAccuracy: true, timeout: 10000, maximumAge: 60000 },
+          );
+        } else {
+          setStatus(`${geolocationErrorMessage()} Toca el mapa para marcar el punto de entrega.`);
+        }
       } catch { /* Si el navegador bloquea el mapa, el diálogo sigue siendo cerrable. */ }
     }
 

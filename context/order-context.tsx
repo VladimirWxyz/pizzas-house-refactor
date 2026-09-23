@@ -28,7 +28,8 @@ interface OrderContextValue {
   geoPlace: string;
   geoOutOfArea: boolean;
   setGeoLocation: (point: GeoPoint, label?: string) => Promise<void>;
-  locateSector: () => Promise<void>;
+  setManualSector: (sector: string) => void;
+  locateSector: () => Promise<"success" | "empty" | "missing-branch" | "not-found">;
   deliveryFee: number | null;
   deliveryKm: number | null;
   deliveryCalculating: boolean;
@@ -151,9 +152,17 @@ export function OrderProvider({ children }: { children: React.ReactNode }) {
     await calculateDelivery(point);
   }, [calculateDelivery]);
 
+  const setManualSector = useCallback((sector: string) => {
+    setDetails((current) => ({ ...current, sector }));
+    setDeliveryPoint(null);
+    setDeliveryFee(null);
+    setDeliveryKm(null);
+  }, []);
+
   const locateSector = useCallback(async () => {
     const sector = details.sector.trim();
-    if (!sector) return;
+    if (!sector) return "empty" as const;
+    if (!getBranchDeliveryArea(details.branch)) return "missing-branch" as const;
     let point = getKnownSectorPoint(details.branch, sector);
     if (!point) {
       try {
@@ -168,9 +177,11 @@ export function OrderProvider({ children }: { children: React.ReactNode }) {
     if (point) {
       setDeliveryPoint(point);
       await calculateDelivery(point);
+      return "success" as const;
     } else {
       setDeliveryFee(null);
       setDeliveryKm(null);
+      return "not-found" as const;
     }
   }, [calculateDelivery, details.branch, details.sector]);
 
@@ -197,8 +208,9 @@ export function OrderProvider({ children }: { children: React.ReactNode }) {
     if (!details.customerName.trim()) return "Escribe el nombre de quien recibe el pedido.";
     if (fulfillment === "delivery" && locationMethod === "gps" && !geoUrl) return "Comparte tu ubicación GPS para continuar con el delivery.";
     if (fulfillment === "delivery" && locationMethod === "manual" && !details.sector.trim()) return "Escribe o selecciona el sector del delivery.";
+    if (fulfillment === "delivery" && locationMethod === "manual" && deliveryFee === null) return "Confirma el sector para calcular y guardar la tarifa del delivery.";
     return "";
-  }, [cart.length, details, fulfillment, geoUrl, locationMethod]);
+  }, [cart.length, deliveryFee, details, fulfillment, geoUrl, locationMethod]);
 
   const whatsappMessage = useMemo(() => {
     const lines = cart.map((item, index) => `${index + 1}. *${item.name}* x1\n   ${item.detail}${item.note ? `\n   _Observación: ${item.note}_` : ""}\n   ${formatUsd(item.price)}`).join("\n");
@@ -262,11 +274,11 @@ export function OrderProvider({ children }: { children: React.ReactNode }) {
   const value = useMemo<OrderContextValue>(() => ({
     selectedSize, setSelectedSize, filter, setFilter, cart, addPizza, addPromo, addBeverage, removeItem, replaceItem, details,
     setDetails, fulfillment, setFulfillment, locationMethod, setLocationMethod, geoUrl, geoPlace, geoOutOfArea, setGeoLocation,
-    locateSector, deliveryFee, deliveryKm, deliveryCalculating, totals, bcvRate, bcvUpdated, drawerOpen, setDrawerOpen, dialog,
+    setManualSector, locateSector, deliveryFee, deliveryKm, deliveryCalculating, totals, bcvRate, bcvUpdated, drawerOpen, setDrawerOpen, dialog,
     openDialog: setDialog, closeDialog: () => setDialog(null), activeItemIndex, setActiveItemIndex, validationError, reviewOrder,
     whatsappUrl, toast, showToast,
   }), [selectedSize, filter, cart, addPizza, addPromo, addBeverage, removeItem, replaceItem, details, fulfillment, setFulfillment,
-    locationMethod, geoUrl, geoPlace, geoOutOfArea, setGeoLocation, locateSector, deliveryFee, deliveryKm, deliveryCalculating, totals,
+    locationMethod, geoUrl, geoPlace, geoOutOfArea, setGeoLocation, setManualSector, locateSector, deliveryFee, deliveryKm, deliveryCalculating, totals,
     bcvRate, bcvUpdated, drawerOpen, dialog, activeItemIndex, validationError, reviewOrder, whatsappUrl, toast, showToast]);
 
   return <OrderContext.Provider value={value}>{children}</OrderContext.Provider>;
