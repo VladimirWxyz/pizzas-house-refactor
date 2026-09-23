@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useOrder } from "@/context/order-context";
 
-const options = [{ size: "1 L", price: 2.5 }, { size: "1.5 L", price: 3.5 }, { size: "2 L", price: 4.5 }];
+const options = [{ size: "1 L", price: 2 }, { size: "1.5 L", price: 3 }, { size: "2 L", price: 4 }];
 
 export function Beverages() {
   const [selected, setSelected] = useState(1);

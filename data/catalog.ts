@@ -8,7 +8,6 @@ export const pizzas: Pizza[] = [
   { name: "4 Estaciones", type: ["clasica", "carnes"], desc: "Jamón, pepperoni, tocineta y vegetales.", photo: "/assets/products/cuatro-estaciones.webp", prices: { P: 10, M: 12, G: 14, EG: 16, "60": 45, "80": 55 } },
   { name: "Margarita House", type: ["clasica", "carnes"], desc: "Salsa, jamón y queso.", prices: { P: 5, M: 6, G: 7, EG: 10, "60": 35, "80": 40 } },
   { name: "Margarita House Primavera", type: ["clasica", "carnes"], desc: "Salsa, jamón, tocineta, queso y maíz.", prices: { P: 10, M: 12, G: 14, EG: 16, "60": 45, "80": 55 } },
-  { name: "Salchichón Full", type: ["clasica", "carnes"], desc: "Salsa, queso, salchichón y vegetales.", prices: { P: 10, M: 12, G: 14, EG: 16, "60": 40, "80": 50 } },
   { name: "Vegetariana House", type: ["clasica", "vegetariana"], desc: "Salsa, queso, pimentón, cebolla, aceitunas negras, champiñones y maíz.", prices: { P: 10, M: 12, G: 15, EG: 18, "60": 40, "80": 50 } },
   { name: "Full Pepperoni", type: ["clasica", "carnes"], desc: "Salsa, queso mozzarella, pepperoni y vegetales.", prices: { P: 10, M: 12, G: 14, EG: 16, "60": 40, "80": 50 } },
 ];
