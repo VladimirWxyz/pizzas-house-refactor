@@ -160,6 +160,7 @@
 .confirm-item > b { color: var(--yellow); white-space: nowrap; }
 .cart-item-actions { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 8px; }
 .customize-item { border: 1px solid var(--line); border-radius: 999px; background: transparent; color: var(--yellow); padding: 7px 10px; font-size: .73rem; font-weight: 800; cursor: pointer; }
+.cart-items-toggle { display: none; }
 
 /* At extreme browser zoom-out values the viewport can become much wider than
    a normal monitor. Keep the hero image visually associated with its copy
@@ -202,4 +203,63 @@
   .chip { width: 100%; min-width: 0; padding-inline: 10px; }
 }
 
-@media (max-width: 620px) { .cart-panel[data-state="open"], .cart-panel[data-state="closed"] { width: 100%; max-width: none; } .dialog-card [data-slot="dialog-title"] { font-size: 2rem; } }
+@media (max-width: 620px) {
+  .cart-panel[data-state="open"], .cart-panel[data-state="closed"] {
+    width: 100%;
+    max-width: none;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .cart-head {
+    position: sticky;
+    top: 0;
+    z-index: 4;
+    background: #171513;
+  }
+
+  .cart-items {
+    position: relative;
+    flex: none;
+    max-height: none;
+    overflow: visible;
+    padding-block: 7px 9px;
+    background: #171513;
+    border-bottom: 1px solid var(--line);
+    box-shadow: 0 12px 22px rgba(0, 0, 0, .2);
+  }
+
+  .cart-items.has-more:not(.is-expanded) .cart-item:nth-of-type(n + 2) { display: none; }
+  .cart-items.has-more:not(.is-expanded) .cart-item-actions { display: none; }
+  .cart-items .cart-item { padding-block: 10px; }
+
+  .cart-items-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    min-height: 40px;
+    margin-top: 6px;
+    border: 1px solid rgba(255, 213, 29, .45);
+    border-radius: 10px;
+    background: rgba(255, 213, 29, .08);
+    color: var(--yellow);
+    font-size: .79rem;
+    font-weight: 900;
+    cursor: pointer;
+  }
+
+  .cart-items-toggle:focus-visible {
+    outline: 3px solid var(--yellow);
+    outline-offset: 2px;
+  }
+
+  .cart-foot {
+    max-height: none;
+    overflow: visible;
+    flex: none;
+  }
+
+  .dialog-card [data-slot="dialog-title"] { font-size: 2rem; }
+}

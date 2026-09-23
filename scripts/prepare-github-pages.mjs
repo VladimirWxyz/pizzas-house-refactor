@@ -1,7 +1,7 @@
 import { cp, readFile, readdir, rename, writeFile } from "node:fs/promises";
 const outputDirectory = new URL("../dist/client/", import.meta.url);
 const repositoryPath = "/pizzas-house-refactor";
-const textExtensions = new Set([".css", ".html", ".js", ".json", ".mjs"]);
+const textExtensions = new Set([".css", ".html", ".js", ".json", ".mjs", ".svg"]);
 
 async function rewriteAssets(directory) {
   let entries;
