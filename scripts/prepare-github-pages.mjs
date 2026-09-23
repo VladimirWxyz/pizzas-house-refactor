@@ -1,4 +1,4 @@
-import { readFile, readdir, writeFile } from "node:fs/promises";
+import { readFile, readdir, rename, writeFile } from "node:fs/promises";
 const outputDirectory = new URL("../dist/client/", import.meta.url);
 const repositoryPath = "/pizzas-house-refactor";
 const textExtensions = new Set([".css", ".html", ".js", ".json", ".mjs"]);
@@ -36,3 +36,15 @@ async function rewriteAssets(directory) {
 }
 
 await rewriteAssets(outputDirectory);
+
+const nestedNextDirectory = new URL(
+  `./${repositoryPath.slice(1)}/_next/`,
+  outputDirectory,
+);
+const rootNextDirectory = new URL("./_next/", outputDirectory);
+
+try {
+  await rename(nestedNextDirectory, rootNextDirectory);
+} catch (error) {
+  if (error?.code !== "ENOENT") throw error;
+}
