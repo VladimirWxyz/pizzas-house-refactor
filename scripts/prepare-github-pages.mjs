@@ -29,7 +29,7 @@ async function rewriteAssets(directory) {
       if (error?.code === "ENOENT") continue;
       throw error;
     }
-    const updatedContent = content.replaceAll('"/assets/', `"${repositoryPath}/assets/`).replaceAll("'/assets/", `'${repositoryPath}/assets/`).replaceAll("`/assets/", `\`${repositoryPath}/assets/`).replaceAll("url(/assets/", `url(${repositoryPath}/assets/`).replaceAll("url('/assets/", `url('${repositoryPath}/assets/`).replaceAll('url("/assets/', `url("${repositoryPath}/assets/`);
+    const updatedContent = content.replaceAll('"/assets/', `"${repositoryPath}/assets/`).replaceAll("'/assets/", `'${repositoryPath}/assets/`).replaceAll("`/assets/", `\`${repositoryPath}/assets/`).replaceAll("url(/assets/", `url(${repositoryPath}/assets/`).replaceAll("url('/assets/", `url('${repositoryPath}/assets/`).replaceAll('url("/assets/', `url("${repositoryPath}/assets/`).replaceAll('"/favicon.svg"', `"${repositoryPath}/favicon.svg"`);
 
     if (updatedContent !== content) await writeFile(entryUrl, updatedContent);
   }

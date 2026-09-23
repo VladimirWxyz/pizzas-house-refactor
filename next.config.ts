@@ -6,7 +6,6 @@ const isGitHubPagesBuild = process.env.GITHUB_ACTIONS === "true";
 const nextConfig: NextConfig = {
   output: "export",
   trailingSlash: true,
-  basePath: isGitHubPagesBuild ? `/${repositoryName}` : "",
   assetPrefix: isGitHubPagesBuild ? `/${repositoryName}/` : undefined,
 };
 
