@@ -4,7 +4,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "Pizzas House · Puerto Ordaz",
   description: "Pizzas House Puerto Ordaz. Pizzas clásicas y Monster, combos, extras y pedidos por WhatsApp.",
-  icons: { icon: "/favicon.svg" },
+  icons: { icon: { url: "/favicon.png", type: "image/png", sizes: "192x192" } },
 };
 
 export const viewport: Viewport = { width: "device-width", initialScale: 1, themeColor: "#e32119" };

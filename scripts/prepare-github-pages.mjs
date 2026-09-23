@@ -40,7 +40,8 @@ async function rewriteAssets(directory) {
         `${repositoryPath}/_next/static/assets/`,
         `${repositoryPath}/assets/`,
       )
-      .replaceAll('"/favicon.svg"', `"${repositoryPath}/favicon.svg"`);
+      .replaceAll('"/favicon.svg"', `"${repositoryPath}/favicon.svg"`)
+      .replaceAll('"/favicon.png"', `"${repositoryPath}/favicon.png"`);
 
     if (updatedContent !== content) await writeFile(entryUrl, updatedContent);
   }
