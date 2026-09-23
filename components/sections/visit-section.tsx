@@ -1,8 +1,8 @@
 const locations = [
-  { name: "Unare II", detail: "Al lado del colegio Virgen Niña", href: "https://maps.google.com/?q=Unare+II+Colegio+Virgen+Ni%C3%B1a+Puerto+Ordaz" },
-  { name: "Alta Vista", detail: "Detrás de la Clínica La Esperanza, frente al estacionamiento de Farmatodo", href: "https://maps.google.com/?q=Cl%C3%ADnica+La+Esperanza+Alta+Vista+Puerto+Ordaz" },
-  { name: "Villa Brasil", detail: "Club La Cantera", href: "https://maps.google.com/?q=Club+La+Cantera+Villa+Brasil+Puerto+Ordaz" },
-  { name: "San Félix", detail: "Urbanización Moreno de Mendoza", href: "https://maps.google.com/?q=Urbanizaci%C3%B3n+Moreno+de+Mendoza+San+F%C3%A9lix" },
+  { name: "Unare II", detail: "Al lado del colegio Virgen Niña", href: "https://www.google.com/maps/place/'@pizzashousepzo'/@8.273946,-62.7707327,18.07z/data=!4m14!1m7!3m6!1s0x8dcbfbce2e076e97:0xa281ece37ddf04c0!2sLA+CANTERA+CLUB!8m2!3d8.3117789!4d-62.7249609!16s%2Fg%2F11t_t23w54!3m5!1s0x8dcbf9e59d0ac4e9:0x76503d4b8d30a894!8m2!3d8.2733399!4d-62.7689088!16s%2Fg%2F11q2sknyq9?entry=ttu&g_ep=EgoyMDI2MDkxNi4wIKXMDSoASAFQAw%3D%3D" },
+  { name: "Alta Vista", detail: "Detrás de la Clínica La Esperanza, frente al estacionamiento de Farmatodo", href: "https://www.google.com/maps/place/Pizza's+House/@8.2921453,-62.7363221,18.07z/data=!4m14!1m7!3m6!1s0x8dcbfbce2e076e97:0xa281ece37ddf04c0!2sLA+CANTERA+CLUB!8m2!3d8.3117789!4d-62.7249609!16s%2Fg%2F11t_t23w54!3m5!1s0x8dcbf900680b071d:0xcb89ed1a4d8b4b59!8m2!3d8.2922507!4d-62.7344649!16s%2Fg%2F11w85c15n4?entry=ttu&g_ep=EgoyMDI2MDkxNi4wIKXMDSoASAFQAw%3D%3D" },
+  { name: "Villa Brasil", detail: "Club La Cantera", href: "https://www.google.com/maps/place/LA+CANTERA+CLUB/@8.3114551,-62.7272515,17z/data=!4m6!3m5!1s0x8dcbfbce2e076e97:0xa281ece37ddf04c0!8m2!3d8.3117789!4d-62.7249609!16s%2Fg%2F11t_t23w54?entry=ttu&g_ep=EgoyMDI2MDkxNi4wIKXMDSoASAFQAw%3D%3D" },
+  { name: "San Félix", detail: "Urbanización Moreno de Mendoza", href: "https://www.google.com/maps?q=8.346540,-62.668449" },
 ];
 
 export function VisitSection() {

@@ -1,4 +1,5 @@
 import type { GeoPoint } from "@/types/order";
+import type { DeliveryRateRule } from "@/data/delivery";
 
 export function estimatedRoadKm(origin: [number, number], point: GeoPoint) {
   const radians = (value: number) => (value * Math.PI) / 180;
@@ -9,4 +10,6 @@ export function estimatedRoadKm(origin: [number, number], point: GeoPoint) {
   return earthRadius * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)) * 1.2;
 }
 
-export const deliveryPriceFor = (kilometers: number) => kilometers <= 4 ? 2 : kilometers <= 7 ? 3 : 4;
+export function deliveryPriceFor(kilometers: number, rules: readonly DeliveryRateRule[]) {
+  return rules.find((rule) => rule.upToKm === undefined || kilometers <= rule.upToKm)?.fee ?? null;
+}

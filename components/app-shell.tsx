@@ -1,7 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import Script from "next/script";
+import { useEffect } from "react";
 import { OrderProvider, useOrder } from "@/context/order-context";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
@@ -17,20 +16,17 @@ import { CartDrawer } from "@/components/order/cart-drawer";
 import { OrderDialogs } from "@/components/order/order-dialogs";
 
 function PizzaHouseSite() {
-  const [loading, setLoading] = useState(true);
   const { cart, totals, setDrawerOpen, toast } = useOrder();
 
   useEffect(() => {
-    const timer = window.setTimeout(() => setLoading(false), 720);
     const observer = new IntersectionObserver((entries) => entries.forEach((entry) => entry.isIntersecting && entry.target.classList.add("in")), { threshold: 0.13 });
     document.querySelectorAll(".reveal").forEach((element) => observer.observe(element));
-    return () => { window.clearTimeout(timer); observer.disconnect(); };
+    return () => observer.disconnect();
   }, []);
 
   return (
     <>
-      <Script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" strategy="afterInteractive" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossOrigin="" />
-      {loading && <div className="site-loader" role="status" aria-live="polite" aria-label="Cargando Pizzas House"><div className="site-loader-inner"><span className="site-loader-logo"><img src="/assets/logo.jpeg" alt="Pizzas House" /></span><span className="site-loader-line" aria-hidden="true" /></div><span className="site-loader-status">Preparando el horno</span></div>}
+      <div className="site-loader" role="status" aria-live="polite" aria-label="Cargando Pizzas House"><div className="site-loader-inner"><span className="site-loader-logo"><img src="/assets/logo.webp" alt="Pizzas House" width="240" height="541" /></span><span className="site-loader-line" aria-hidden="true" /></div><span className="site-loader-status">Preparando el horno</span></div>
       <a className="skip" href="#menu">Saltar al menú</a>
       <Header />
       <main>

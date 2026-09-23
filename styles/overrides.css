@@ -1,18 +1,205 @@
 .sizes-cta { margin-top: 30px; }
 .dialog-full-button { width: 100%; margin-top: 18px; }
-.combo-card { --combo-photo: url('/assets/products/combo-3p.jpeg'); }
+@font-face {
+  font-family: "Archivo Black";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/assets/fonts/archivo-black-latin.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: "Barlow Condensed";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/assets/fonts/barlow-condensed-600-latin.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: "Barlow Condensed";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/assets/fonts/barlow-condensed-700-latin.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: "Barlow Condensed";
+  font-style: italic;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/assets/fonts/barlow-condensed-700-italic-latin.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: "Barlow Condensed";
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url('/assets/fonts/barlow-condensed-800-latin.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: "Barlow Condensed";
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url('/assets/fonts/barlow-condensed-900-latin.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: "DM Sans";
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('/assets/fonts/dm-sans-latin.woff2') format('woff2');
+}
+
+.hero::before {
+  background-image: linear-gradient(90deg, rgba(13, 13, 13, .96) 0%, rgba(13, 13, 13, .67) 44%, rgba(13, 13, 13, .1) 73%), url('/assets/pizza-cuatro-sabores-limpia.webp');
+}
+.promo-feature-media {
+  background-image: linear-gradient(90deg, transparent 58%, #111 100%), url('/assets/products/combo-10.webp');
+}
+.combo-card--shared-photo { --combo-photo: url('/assets/products/combo-3p.webp'); }
+
+.site-loader {
+  animation: site-loader-exit .45s ease .72s forwards;
+}
+
+@keyframes site-loader-exit {
+  to { opacity: 0; visibility: hidden; pointer-events: none; }
+}
+
+@media (max-width: 900px) {
+  .hero::before {
+    background-image: linear-gradient(0deg, rgba(13, 13, 13, .98) 0%, rgba(13, 13, 13, .62) 54%, rgba(13, 13, 13, .27)), url('/assets/pizza-cuatro-sabores-limpia.webp');
+  }
+  .promo-feature-media {
+    background-image: linear-gradient(0deg, #111 0, transparent 42%), url('/assets/products/combo-10.webp');
+  }
+}
 [data-slot="sheet-overlay"] { z-index: 300; background: rgba(0, 0, 0, .72); }
-.cart-panel[data-state="open"], .cart-panel[data-state="closed"] { right: 0; top: 0; transform: none; gap: 0; max-width: 540px; padding: 0; color: white; }
+.cart-panel[data-state="open"], .cart-panel[data-state="closed"] { position: fixed; z-index: 301; inset: 0 0 0 auto; width: min(540px, 100%); height: 100dvh; transform: none; gap: 0; max-width: none; padding: 0; color: white; }
 .cart-panel[data-state="closed"] { transform: translateX(102%); }
 .cart-panel [data-slot="sheet-title"] { color: white; font: 900 2.3rem/1 var(--display); text-transform: uppercase; }
 [data-slot="dialog-overlay"] { z-index: 700; background: rgba(0, 0, 0, .82); }
-.dialog-card[data-slot="dialog-content"] { z-index: 701; display: block; gap: 0; padding: 0; color: white; outline: none; }
+.dialog-card[data-slot="dialog-content"] { z-index: 701; display: block; width: min(620px, calc(100% - 40px)); max-width: calc(100% - 40px); gap: 0; padding: 0; color: white; outline: none; }
 .dialog-card [data-slot="dialog-title"] { margin: 0; color: white; font: 900 2.4rem/.9 var(--display); text-transform: uppercase; }
 .dialog-card [data-slot="dialog-description"] { margin: 9px 0 0; color: #aaa69e; font: inherit; line-height: 1.45; }
+
+.delivery-map-marker {
+  width: 30px !important;
+  height: 30px !important;
+  margin: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+  color: #1b1b1f;
+}
+
+.delivery-map-marker svg {
+  display: block;
+  width: 30px;
+  height: 30px;
+  fill: currentcolor;
+  filter: drop-shadow(0 2px 3px rgb(27 27 31 / 0.35));
+}
+
+/* Capa clara y controles compactos inspirados en mapas de navegación modernos. */
+.map-picker.leaflet-container { font-family: Arial, sans-serif; background: #e7edf4; }
+
+/* Tratamiento visual del mapa usado en Galería: CARTO Light sobre datos de OpenStreetMap. */
+.map-picker .leaflet-tile-pane {
+  filter: grayscale(1) contrast(0.92);
+}
+
+.map-picker.leaflet-container::after {
+  position: absolute;
+  z-index: 450;
+  inset: 0;
+  pointer-events: none;
+  background: #1b1b1f;
+  content: "";
+  mix-blend-mode: color;
+  opacity: 0.75;
+}
+
+.map-picker .leaflet-bar {
+  overflow: hidden;
+  border: 0;
+  border-radius: 10px;
+  box-shadow: 0 2px 7px rgb(60 64 67 / 0.3);
+}
+
+.map-picker .leaflet-bar a {
+  width: 40px;
+  height: 40px;
+  border: 0;
+  background: #fff;
+  color: #202124;
+  font: 500 28px/38px Arial, sans-serif;
+}
+
+.map-picker .leaflet-bar a:hover { background: #f8f9fa; color: #202124; }
+.map-picker .leaflet-bar a + a { border-top: 1px solid #e4e7eb; }
+
+.map-picker .leaflet-control-attribution {
+  padding: 1px 3px;
+  border-radius: 4px 0 0;
+  background: rgb(255 255 255 / 0.52);
+  color: #687078;
+  font: 7px/1.1 Arial, sans-serif;
+  opacity: 0.48;
+}
+
+.map-picker .leaflet-control-attribution a { color: #1a73e8; }
 .confirm-item { display: flex; justify-content: space-between; gap: 20px; padding: 9px 0; border-bottom: 1px solid var(--line); }
 .confirm-item span, .confirm-item small { display: block; }
 .confirm-item small { margin-top: 4px; color: #aaa69e; }
 .confirm-item > b { color: var(--yellow); white-space: nowrap; }
 .cart-item-actions { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 8px; }
 .customize-item { border: 1px solid var(--line); border-radius: 999px; background: transparent; color: var(--yellow); padding: 7px 10px; font-size: .73rem; font-weight: 800; cursor: pointer; }
+
+/* At extreme browser zoom-out values the viewport can become much wider than
+   a normal monitor. Keep the hero image visually associated with its copy
+   instead of pinning it to the far edge of that oversized canvas. */
+@media (min-width: 2200px) {
+  .hero::before { background-position: center, calc(50% + 200px) center; }
+}
+
+/* The catalog navigation is also a <nav>, so the desktop header rule aligns it
+   to the end of its parent at tablet widths. Keep all menu controls in one
+   balanced column between the desktop and phone layouts. */
+@media (min-width: 621px) and (max-width: 900px) {
+  .menu-tools { width: 100%; }
+
+  .sizes {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    width: 100%;
+  }
+
+  .size-btn { width: 100%; min-width: 0; padding-inline: 0; }
+
+  .catalog-jump {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    width: 100%;
+    justify-self: stretch;
+    margin: 18px 0 26px;
+  }
+
+  .catalog-jump a { justify-content: center; min-width: 0; padding-inline: 10px; }
+
+  .filters {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    width: 100%;
+    margin: 0 0 26px;
+  }
+
+  .chip { width: 100%; min-width: 0; padding-inline: 10px; }
+}
+
 @media (max-width: 620px) { .cart-panel[data-state="open"], .cart-panel[data-state="closed"] { width: 100%; max-width: none; } .dialog-card [data-slot="dialog-title"] { font-size: 2rem; } }

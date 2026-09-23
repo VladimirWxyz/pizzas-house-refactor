@@ -16,7 +16,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es">
-      <head><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous"/><link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Barlow+Condensed:ital,wght@0,600;0,700;0,800;0,900;1,700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/><link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossOrigin=""/></head>
+      <head><link rel="preload" as="image" href="/assets/pizza-cuatro-sabores-limpia.webp" type="image/webp" fetchPriority="high"/><link rel="preload" as="font" href="/assets/fonts/archivo-black-latin.woff2" type="font/woff2" crossOrigin="anonymous"/><link rel="preload" as="font" href="/assets/fonts/barlow-condensed-900-latin.woff2" type="font/woff2" crossOrigin="anonymous"/><link rel="preload" as="font" href="/assets/fonts/dm-sans-latin.woff2" type="font/woff2" crossOrigin="anonymous"/></head>
       <body>{children}</body>
     </html>
   );

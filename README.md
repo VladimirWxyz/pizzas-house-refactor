@@ -1,6 +1,6 @@
 # Pizzas House · aplicación web
 
-Refactor de la web comercial a React, Vinext y TypeScript. La versión monolítica usada como referencia permanece en `../separated/pizzas-house-web/index.html` y no forma parte del código de la aplicación.
+Refactor de la web comercial a React, Vinext y TypeScript. La versión monolítica usada como referencia permanece fuera de este proyecto, en `../legacy-reference/pizzas-house-monolith/index.html`, y no forma parte del código de la aplicación.
 
 ## Scripts
 

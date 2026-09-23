@@ -1,9 +1,10 @@
 "use client";
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
-import { branchCenters, fulfillmentNames, pizzas, promos, sectorPoints, sizeNames } from "@/data/catalog";
+import { fulfillmentNames, pizzas, promos, sizeNames } from "@/data/catalog";
+import { branchCenters, getBranchDeliveryArea, getDeliveryRateRulesForBranch, getKnownSectorPoint, getNearestDeliveryZone } from "@/data/delivery";
 import { deliveryPriceFor, estimatedRoadKm } from "@/lib/delivery";
-import { formatBs, formatUsd, normalizeSector, uniqueId } from "@/lib/format";
+import { formatBs, formatUsd, uniqueId } from "@/lib/format";
 import type { CartItem, DialogName, Fulfillment, GeoPoint, LocationMethod, OrderDetails, OrderTotals, PizzaFilter, SizeKey } from "@/types/order";
 
 interface OrderContextValue {
@@ -102,7 +103,8 @@ export function OrderProvider({ children }: { children: React.ReactNode }) {
 
   const calculateDelivery = useCallback(async (point: GeoPoint) => {
     const origin = branchCenters[details.branch];
-    if (fulfillment !== "delivery" || !origin) {
+    const rateRules = getDeliveryRateRulesForBranch(details.branch);
+    if (fulfillment !== "delivery" || !origin || !rateRules) {
       setDeliveryFee(null);
       setDeliveryKm(null);
       return;
@@ -113,11 +115,11 @@ export function OrderProvider({ children }: { children: React.ReactNode }) {
       const route = response.ok ? (await response.json() as { routes?: { distance: number }[] }).routes?.[0] : null;
       const kilometers = route ? route.distance / 1000 : estimatedRoadKm(origin, point);
       setDeliveryKm(kilometers);
-      setDeliveryFee(deliveryPriceFor(kilometers));
+      setDeliveryFee(deliveryPriceFor(kilometers, rateRules));
     } catch {
       const kilometers = estimatedRoadKm(origin, point);
       setDeliveryKm(kilometers);
-      setDeliveryFee(deliveryPriceFor(kilometers));
+      setDeliveryFee(deliveryPriceFor(kilometers, rateRules));
     } finally {
       setDeliveryCalculating(false);
     }
@@ -132,15 +134,17 @@ export function OrderProvider({ children }: { children: React.ReactNode }) {
       setGeoOutOfArea(true);
     } else {
       const city = point.lng > -62.69 ? "San Félix" : "Puerto Ordaz";
+      const area = city === "San Félix" ? "san-felix" : "puerto-ordaz";
+      const nearestZone = getNearestDeliveryZone(area, point);
       setGeoOutOfArea(false);
-      setGeoPlace(`${label}, ${city}`);
+      setGeoPlace(nearestZone ? `${nearestZone.name}, ${city}` : `${label}, ${city}`);
       try {
         const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${point.lat}&lon=${point.lng}&zoom=16&addressdetails=1`, { headers: { "Accept-Language": "es" } });
         if (response.ok) {
           const data = await response.json() as { address?: Record<string, string> };
           const address = data.address ?? {};
           const sector = address.neighbourhood || address.suburb || address.quarter || address.residential || address.city_district || address.village;
-          setGeoPlace(sector ? `${sector}, ${city}` : `${city} · sector por confirmar`);
+          setGeoPlace(sector ? `${sector}, ${city}` : (nearestZone ? `${nearestZone.name}, ${city}` : `${label}, ${city}`));
         }
       } catch { /* El punto exacto sigue siendo válido aunque falle el nombre del sector. */ }
     }
@@ -150,10 +154,12 @@ export function OrderProvider({ children }: { children: React.ReactNode }) {
   const locateSector = useCallback(async () => {
     const sector = details.sector.trim();
     if (!sector) return;
-    let point = sectorPoints[normalizeSector(sector)];
+    let point = getKnownSectorPoint(details.branch, sector);
     if (!point) {
       try {
-        const query = encodeURIComponent(`${sector}, Ciudad Guayana, Bolívar, Venezuela`);
+        const area = getBranchDeliveryArea(details.branch);
+        if (!area) throw new Error("branch missing");
+        const query = encodeURIComponent(`${sector}, ${area === "san-felix" ? "San Félix" : "Puerto Ordaz"}, Ciudad Guayana, Bolívar, Venezuela`);
         const response = await fetch(`https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&countrycodes=ve&q=${query}`, { headers: { "Accept-Language": "es" } });
         const result = response.ok ? (await response.json() as { lat: string; lon: string }[])[0] : null;
         if (result) point = { lat: Number(result.lat), lng: Number(result.lon) };
@@ -166,7 +172,7 @@ export function OrderProvider({ children }: { children: React.ReactNode }) {
       setDeliveryFee(null);
       setDeliveryKm(null);
     }
-  }, [calculateDelivery, details.sector]);
+  }, [calculateDelivery, details.branch, details.sector]);
 
   const setFulfillment = useCallback((mode: Fulfillment) => {
     setFulfillmentState(mode);

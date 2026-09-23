@@ -10,7 +10,7 @@ export function Header() {
   return (
     <header>
       <div className="container nav">
-        <a href="#inicio" className="brand" aria-label="Pizzas House, inicio"><span className="brand-mark"><img src="/assets/logo.jpeg" alt="" /></span>Pizzas House</a>
+        <a href="#inicio" className="brand" aria-label="Pizzas House, inicio"><span className="brand-mark"><img src="/assets/logo.webp" alt="" width="240" height="541" /></span>Pizzas House</a>
         <div className="delivery-status" aria-label="Servicio de delivery activo"><span className="delivery-dot" aria-hidden="true" /><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" aria-hidden="true"><path d="M5 17a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm14 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4ZM7 19h7m-4-9h5l3 4h2l1 5h-1M4 10h6v9H7"/><path d="M3 7h7v3H3z"/></svg><span>Delivery activo</span></div>
         <nav id="nav-menu" className={menuOpen ? "open" : ""} aria-label="Navegación principal">
           <a className="nav-link" href="#menu" onClick={closeMenu}>Menú</a><a className="nav-link" href="#tamanos" onClick={closeMenu}>Tamaños</a><a className="nav-link" href="#historia" onClick={closeMenu}>Nuestra casa</a><a className="nav-link" href="#equipo" onClick={closeMenu}>Equipo</a><a className="nav-link" href="#visitanos" onClick={closeMenu}>Visítanos</a>
