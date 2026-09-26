@@ -3,7 +3,7 @@ import type { Fulfillment, Pizza, Promo, SizeKey } from "@/types/order";
 export { branchCenters, branches } from "@/data/delivery";
 
 export const pizzas: Pizza[] = [
-  { name: "Full Home", type: ["clasica", "carnes"], desc: "Salsa, queso, pepperoni, maíz, aceitunas negras, champiñones y vegetales.", photo: "/assets/products/full-home.webp", prices: { P: 12, M: 14, G: 16, EG: 20, "60": 55, "80": 65 } },
+  { name: "Full Home", type: ["clasica", "carnes"], desc: "Salsa, queso, pepperoni, tocineta, maíz, aceitunas negras, champiñones y vegetales.", photo: "/assets/products/full-home.webp", prices: { P: 12, M: 14, G: 16, EG: 20, "60": 55, "80": 65 } },
   { name: "Pizza Radical", type: ["clasica", "carnes"], desc: "Salsa, queso, borde de queso, jamón, pepperoni, tocineta y vegetales.", photo: "/assets/products/pizza-radical.webp", prices: { P: 12, M: 14, G: 16, EG: 20, "60": 55, "80": 65 } },
   { name: "4 Estaciones", type: ["clasica", "carnes"], desc: "Jamón, pepperoni, tocineta y vegetales.", photo: "/assets/products/cuatro-estaciones.webp", prices: { P: 10, M: 12, G: 14, EG: 16, "60": 45, "80": 55 } },
   { name: "Margarita House", type: ["clasica", "carnes"], desc: "Salsa, jamón y queso.", prices: { P: 5, M: 6, G: 7, EG: 10, "60": 35, "80": 40 } },
